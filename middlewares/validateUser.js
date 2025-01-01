@@ -4,6 +4,9 @@ import userModel from "../models/User.js";
 export const validateUser = async (req, res, next) => {
     const accessToken = req.cookies.accesstoken;
     const refreshToken = req.cookies.refreshtoken;
+
+    console.log("the cookies i set", accessToken, refreshToken);
+    
     
     if (!accessToken) {
         if (!refreshToken) {
