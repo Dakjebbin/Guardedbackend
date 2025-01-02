@@ -113,14 +113,14 @@ const loginUser = async (req, res) => {
       );
   
     res.cookie("accesstoken", AccessToken, {
-    //  httpOnly: true,
-    //  secure: true,
+     httpOnly: true,
+     secure: true,
        sameSite: 'none',
       maxAge: 30 * 60 * 1000
     })
     res.cookie("refreshtoken", RefreshToken, {
-      // httpOnly: true,
-      // secure: true,
+      httpOnly: true,
+      secure: true,
       sameSite: 'none',
       maxAge: 2 * 60 * 60 * 1000
     })
