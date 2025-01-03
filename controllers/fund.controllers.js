@@ -20,12 +20,6 @@ const fundData = async (req, res) => {
         { amount, plan },               
         { new: true, upsert: true }      
       );
-  
-        // const updateBalance = await userModel.findOneAndUpdate(
-        //     { username: validUser.username },
-        //    {$inc: { balance: amount}},
-        //     {new: true, upsert: true}
-        // )
 
 
 
@@ -40,4 +34,82 @@ const fundData = async (req, res) => {
     }
   };
 
-  export {fundData}
+  const fundDataAdmin = async (req, res) => {
+    const {id} = req.params;
+    const { balance } = req.body;
+
+    try {
+
+      if (!balance) {
+        return res.status(400).json({ error: "Balance is required" });
+      }
+
+      if (balance <= 0) {
+        return res.status(400).json({ error: "Invalid balance" });
+      }
+
+      const user = await userModel.findById(id).exec();
+
+      if (!user) {
+        return res.status(404).json({ error: "User not found" });
+      }
+
+        user.balance = parseFloat(user.balance) + parseFloat(balance);
+        await user.save();
+
+      res.status(201).json({
+        success: true,
+        message: "Balance updated successfully",
+        data: user
+      });
+
+    }catch{
+      res.status(500).json({
+        success: false,
+        message: "Internal Server Error"
+      })
+    }
+
+
+  }
+
+  const addProfitAdmin = async (req, res) => {
+    const {id} = req.params;
+    const { profit } = req.body;
+
+    try {
+
+      if (!profit) {
+        return res.status(400).json({ error: "Profit is required" });
+      }
+
+      if (profit <= 0) {
+        return res.status(400).json({ error: "Invalid Profits" });
+      }
+
+      const user = await userModel.findById(id).exec();
+
+      if (!user) {
+        return res.status(404).json({ error: "User not found" });
+      }
+
+        user.profit = parseFloat(user.profit) + parseFloat(profit);
+        await user.save();
+
+      res.status(201).json({
+        success: true,
+        message: "Profit updated successfully",
+        data: user
+      });
+
+    }catch{
+      res.status(500).json({
+        success: false,
+        message: "Internal Server Error"
+      })
+    }
+
+
+  }
+
+  export {fundData, fundDataAdmin, addProfitAdmin};

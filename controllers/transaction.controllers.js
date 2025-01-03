@@ -82,13 +82,14 @@ const updateTransactionStatus = async (req, res) => {
       return res.status(404).json({ status: "error", error: "Transaction not found" });
     }
   
-
-  transaction.status = status;
+ const data = transaction.status = status;
     await transaction.save();
+
 
     res.status(200).json({ 
       success:true,
-      message: "Status updated successfully"
+      message: "Status updated successfully",
+      data: data
     })
   } catch (error) {
     

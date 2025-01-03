@@ -9,6 +9,7 @@ import dotenv from "dotenv"
 import authRoutes from "./routes/user.routes.js"
 import fundRoutes from "./routes/fund.routes.js"
 import transactRoutes from "./routes/transaction.routes.js"
+
 dotenv.config()
 
 
