@@ -136,6 +136,25 @@ const loginUser = async (req, res) => {
       res.json({ success:false, message: "Internal Server Error" });
     }
   };
+
+  const getUserDetails = async (req, res) => {
+    
+  const { id } = req.params;  
+   try {
+    const user = await userModel.findById(id);
+      if (!user) {
+      return res.status(404).json({ status: 'error', message: 'User not found' });
+    }
+
+res.status(200).json({
+  success: true, 
+  message: "User found",
+  data: user 
+});
+  } catch (error) {
+    res.status(500).json({ status: 'error', message: 'Error fetching user: ' + error.message });
+  }
+  }
   
 
  const allUsers = async (req, res) => {
@@ -192,4 +211,4 @@ const loginUser = async (req, res) => {
       
     }
 
-  export {registerUser, loginUser, allUsers, validate, logout}
+  export {registerUser, loginUser, allUsers, validate, logout, getUserDetails}

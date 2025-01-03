@@ -42,37 +42,6 @@ mongoose.connect(dataBase).then(() => {
 
 
 
-// app.get('/users/:username', async (req, res) => {
-//   const { username } = req.params;  // Get username from route parameters
-//   try {
-//     const user = await userModel.findOne({ username });
-//     if (!user) {
-//       return res.status(404).json({ status: 'error', message: 'User not found' });
-//     }
-
-//     // req.session.username = user.username;
-
-//     res.json({ status: 'ok', data: user });
-//   } catch (error) {
-//     res.status(500).json({ status: 'error', message: 'Error fetching user: ' + error.message });
-//   }
-// });
-
-app.post("/saveData",  async (req, res) => {
-  const { balance, profit } = req.body;
-  // Save balance and profit to the database
-  try {
-    const updatedData = await userModel.updateOne(
-      { username: req.username }, // Use username from verified token
-      { balance, profit },
-      { new: true, upsert: true }
-    );
-    res.json({ status: "ok", data: updatedData });
-  } catch (error) {
-    res.json({ status: "error", error: "Failed to save user data" });
-  }
-});
-
 
 // Endpoint to add funds
 
@@ -159,27 +128,7 @@ app.patch("/transactions-update/:id", async (req, res) => {
 // Add this route to your backend
 
 
-// Update transaction status
-/*
-app.patch("/transactions-update/:id", verifyToken, async (req, res) => {
-  const { id } = req.params; // Use id from route parameters
-  const { status } = req.body;
-  try {
-    const updatedTransaction = await transactionModel.findByIdAndUpdate(
-      id,
-      { status },
-      { new: true }
-    );
-    if (!updatedTransaction) {
-      return res.status(404).json({ status: "error", error: "Transaction not found" });
-    }
-    res.json({ status: "ok", data: updatedTransaction });
-  } catch (error) {
-    console.error("Error updating transaction status:", error);
-    res.status(500).json({ status: "error", error: "Failed to update status" });
- }
- });
-*/
+
 app.post("/transactions-add", async (req, res) => {
 
   try {
