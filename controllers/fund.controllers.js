@@ -98,7 +98,7 @@ const fundData = async (req, res) => {
         await user.save();
 
         const transaction = new transactionModel({
-          username: user.username,
+          username: user._id,
           type: "Profit",
           amount: profit,
           status: "Successfull"
