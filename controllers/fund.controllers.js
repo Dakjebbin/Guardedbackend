@@ -104,6 +104,8 @@ const fundData = async (req, res) => {
           status: "Successfull"
         });
 
+        await transaction.save();
+
       res.status(201).json({
         success: true,
         message: "Profit updated successfully",
