@@ -1,4 +1,5 @@
 import fundModel from "../models/Fund.js";
+import transactionModel from "../models/Transact.js";
 import userModel from "../models/User.js";
 
 const fundData = async (req, res) => {
@@ -96,10 +97,17 @@ const fundData = async (req, res) => {
         user.profit = parseFloat(user.profit) + parseFloat(profit);
         await user.save();
 
+        const transaction = new transactionModel({
+          username: user.username,
+          type: "Profit",
+          amount: profit,
+          status: "Successfull"
+        });
+
       res.status(201).json({
         success: true,
         message: "Profit updated successfully",
-        data: user
+        data: user, transaction
       });
 
     }catch{
